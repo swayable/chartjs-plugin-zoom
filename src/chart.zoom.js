@@ -536,7 +536,7 @@ var zoomPlugin = {
 
 	beforeDatasetsDraw: function(chartInstance) {
 		var ctx = chartInstance.chart.ctx;
-		var chartArea = chartInstance.chartArea;
+		var canvas = chartInstance.canvas;
 		ctx.save();
 		ctx.beginPath();
 
@@ -577,7 +577,8 @@ var zoomPlugin = {
 			}
 		}
 
-		ctx.rect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+		// Fixes chart clipping bug, see  https://github.com/chartjs/chartjs-plugin-zoom/issues/177
+		ctx.rect(canvas.offsetLeft, canvas.offsetTop, canvas.offsetWidth, canvas.offsetHeight);
 		ctx.clip();
 	},
 
